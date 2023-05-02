@@ -26,7 +26,6 @@ public class UsuariosController : ControllerBase
         return false;
     }
 
-
     [HttpPost("Registrar")]
 
     public async Task<IActionResult> RegistrarUsuario(Usuario user)
@@ -50,6 +49,7 @@ public class UsuariosController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    
     [HttpPost("Autenticar")]
     public async Task<IActionResult> AutenticarUsuario(Usuario credenciais)
     {
@@ -81,5 +81,4 @@ public class UsuariosController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    
 }
