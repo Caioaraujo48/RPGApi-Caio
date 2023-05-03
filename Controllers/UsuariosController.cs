@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RpgApi.Models;
 using RpgApi.Utils;
+using System.Collections.Generic;
+using System.Linq;
+
 
 
 [ApiController]
@@ -71,7 +74,6 @@ public class UsuariosController : ControllerBase
                 _context.Usuarios.Update(usuario);
                 await _context.SaveChangesAsync(); //Confirma a alteração no banco
 
-
                 return Ok(usuario);
 
             }
@@ -81,4 +83,30 @@ public class UsuariosController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    [HttpPut("AlterarSenha")]
+    public async Task<IActionResult> AlterarSenhaUsuario (Usuario credenciais)
+    {
+        try
+        {
+            Usuario usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(x => x.Username.ToLower().Equals(credenciais.Username.ToLower()));
+
+            if (usuario == null)
+            {
+                throw new System.Exception("Usuário não encontrado.");
+            }
+            Criptografia.CriarPasswordHash(credenciais.PasswordString, out byte[] hash, out byte [] salt);
+            usuario.PasswordHash = hash;
+            usuario.PasswordSalt = salt;
+
+            _context.Usuarios.Update(usuario);
+            int linhasAfetadas = await _context.SaveChangesAsync();
+            return Ok(linhasAfetadas);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 }
