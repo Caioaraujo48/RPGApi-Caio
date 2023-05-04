@@ -108,5 +108,87 @@ public class UsuariosController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
+    [HttpGet("GetAll")]
+    public async Task<IActionResult> GetUsuario()
+    {
+        try
+        {
+            List<Usuario> lista = await _context.Usuarios.ToListAsync();
+            return Ok(lista);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetSingle(int id)
+    {
+        try
+        {
+            Personagem p = await _context.Personagns
+                .Include(ar => ar.Arma)
+                .Include(us => Usuario)
+                .Include(ph => ph.PersonagemHabilidades)
+                    .ThenInclude(h => h.Habilidade)
+                .FirstOrDefaultAsync(pBusca => pBusca.Id == id);
 
+            return Ok(p);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("{PersonagemId}")]
+    public async Task<IactionResult> GetHabilidadesPersonagem(int personagemId)
+    {
+        try
+        {
+            List<PersonagemHabilidade> phLista = new List<PersonagemHabilidade>();
+            phLista = await _context.PersonagemHabilidades
+            .Include(p => p.Personagem)
+            .Include(p => p.Habilidade)
+            .Where(p => p.Personagem.Id == personagemId).ToListAsync();
+            return Ok(phLista);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HttpGet("GetHabilidades")]
+    public async Task<IActionResult> GetHabilidade()
+    {
+        try
+        {
+            List<Habilidade> habilidades = new List<Habilidade>();
+            habilidades = await _context.Habilidades.ToListAsync();
+            return Ok(habilidades);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+    [HtppPost("DeletePersonagemHabilidade")]
+    public async Task<IActionResult> DeleteAsync(PersonagemHabilidade ph)
+    {
+        try
+        {
+            PersonagemHabilidade phRemover = await _context.PersonagemHabilidades
+                .FirstOrDefaultAsync(phBusca => phBusca.PersonagemId == ph.PersonagemId
+                && phBusca.HabilidadeId == ph.HabilidadeId);
+            if(phRemover == null)
+                throw new System.Exception("Personagem ou Habilidade não encontrados");
+
+            _context.PersonagemHabilidades.Remove(phRemover);
+            int linhasAfetadas = await _context.SaveChangesAsync();
+            return Ok(linhasAfetadas);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
 }
