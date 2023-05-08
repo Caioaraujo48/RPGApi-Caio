@@ -3794,11 +3794,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CaioPeddro\\DS-l\\Rpg\\RpgApi\\RpgApi.csproj",
+      "projectUniqueName": "D:\\CaioPeddro\\RPGApi-Caio\\RpgApi.csproj",
       "projectName": "RpgApi",
-      "projectPath": "D:\\CaioPeddro\\DS-l\\Rpg\\RpgApi\\RpgApi.csproj",
+      "projectPath": "D:\\CaioPeddro\\RPGApi-Caio\\RpgApi.csproj",
       "packagesPath": "C:\\Users\\EtecHAS\\.nuget\\packages\\",
-      "outputPath": "D:\\CaioPeddro\\DS-l\\Rpg\\RpgApi\\obj\\",
+      "outputPath": "D:\\CaioPeddro\\RPGApi-Caio\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

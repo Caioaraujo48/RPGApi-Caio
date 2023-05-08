@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5IV5iGWUMXyljjAmpj/a+dVfScaXcE0uGiZTIS1DRvFkW3ZQKAI0VjYMJ2aPD02qanFKX/hWUmrYTi2EV+vZAw==",
+  "dgSpecHash": "zIxfKgs7TVnMm5w4Jc7OMx/BypmPc1DQfLId2G5axazUm8wWW9s13sNrl/qOBqkO5m3r/ROSWbAymVaQSmxEUw==",
   "success": true,
-  "projectFilePath": "D:\\CaioPeddro\\DS-l\\Rpg\\RpgApi\\RpgApi.csproj",
+  "projectFilePath": "D:\\CaioPeddro\\RPGApi-Caio\\RpgApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\EtecHAS\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\EtecHAS\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

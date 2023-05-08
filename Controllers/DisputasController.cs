@@ -89,7 +89,7 @@ namespace RpgApi.Controlleres
                 d.Result = new List<string>();
 
                 List<Personagem> personagens = await _context.Personagens
-                    .Include(personagens => p.Arma)
+                    .Include(p => p.Arma)
                     .Include(p => p.PersonagemHabilidades).ThenInclude(ph => ph.Habilidade)
                     .Where(personagens => d.ListaIdPersonagens.Contains(p.Id)).ToListAsync();
 
@@ -149,7 +149,7 @@ namespace RpgApi.Controlleres
                     {
                         atacante.Vitorias++;
                         oponente.Derrotas++;
-                        atacante.Disputadas++;
+                        atacante.Disputas++;
                         oponente.Disputas++;
 
                         d.Id = 0;
@@ -162,7 +162,7 @@ namespace RpgApi.Controlleres
 
                     if(qtdPersonagensVivos == 1)
                     {
-                        string resultadoFinal = $"{atacante.Nome.TopUpper()} é CAMPEÂO com {atacante.PontosVida} pontos de vida restantes!";
+                        string resultadoFinal = $"{atacante.Nome.ToUpper()} é CAMPEÂO com {atacante.PontosVida} pontos de vida restantes!";
                         d.Narracao += resultadoFinal;
                         d.Resultados.Add(resultadoFinal);
 
@@ -181,31 +181,32 @@ namespace RpgApi.Controlleres
             }
         }
         [HttpDelete("ApagarDisputas")] 
-        publicasyncTask<IActionResult> DeleteAsync()
+        public async Task<IActionResult> DeleteAsync()
         { 
             try          
             { 
-                List<Disputa> disputas = await_context.Disputas.ToListAsync();
+                List<Disputa> disputas = await _context.Disputas.ToListAsync();
                 _context.Disputas.RemoveRange(disputas); 
-                await_context.SaveChangesAsync(); 
+                await _context.SaveChangesAsync(); 
                 return Ok("Disputas apagadas");             
             } 
-            catch(System.Exceptionex)             
-            {                
-                returnBadRequest(ex.Message); 
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
         [HttpGet("Listar")] 
-        publicasyncTask<IActionResult> ListarAsync()         
+        public async Task<IActionResult> ListarAsync()         
         { 
             try            
             { 
-                List<Disputa> disputas = await_context.Disputas.ToListAsync();                 
+                List<Disputa> disputas = await _context.Disputas.ToListAsync();                 
                 return Ok(disputas);             
-            } catch (System.Exceptionex)             
-            { 
-                returnBadRequest(ex.Message);             
-            }         
+            } 
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }      
         } 
     }
 }

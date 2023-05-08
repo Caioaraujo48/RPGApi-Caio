@@ -126,9 +126,9 @@ public class UsuariosController : ControllerBase
     {
         try
         {
-            Personagem p = await _context.Personagns
+            Personagem p = await _context.Personagens
                 .Include(ar => ar.Arma)
-                .Include(us => Usuario)
+                .Include(us => us.Usuario)
                 .Include(ph => ph.PersonagemHabilidades)
                     .ThenInclude(h => h.Habilidade)
                 .FirstOrDefaultAsync(pBusca => pBusca.Id == id);
@@ -141,7 +141,7 @@ public class UsuariosController : ControllerBase
         }
     }
     [HttpGet("{PersonagemId}")]
-    public async Task<IactionResult> GetHabilidadesPersonagem(int personagemId)
+    public async Task<IActionResult> GetHabilidadesPersonagem(int personagemId)
     {
         try
         {
@@ -171,7 +171,7 @@ public class UsuariosController : ControllerBase
             return BadRequest(ex.Message);
         }
     }
-    [HtppPost("DeletePersonagemHabilidade")]
+    [HttpPost("DeletePersonagemHabilidade")]
     public async Task<IActionResult> DeleteAsync(PersonagemHabilidade ph)
     {
         try
