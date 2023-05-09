@@ -86,12 +86,12 @@ namespace RpgApi.Controlleres
         {
             try
             {
-                d.Result = new List<string>();
+                d.Resultados = new List<string>();
 
                 List<Personagem> personagens = await _context.Personagens
                     .Include(p => p.Arma)
                     .Include(p => p.PersonagemHabilidades).ThenInclude(ph => ph.Habilidade)
-                    .Where(personagens => d.ListaIdPersonagens.Contains(p.Id)).ToListAsync();
+                    .Where(p => d.ListaIdPersonagens.Contains(p.Id)).ToListAsync();
 
                 int qtdPersonagensVivos = personagens.FindAll(p => p.PontosVida > 0).Count;
 
@@ -207,6 +207,6 @@ namespace RpgApi.Controlleres
             {
                 return BadRequest(ex.Message);
             }      
-        } 
+        }
     }
 }
