@@ -13,7 +13,7 @@ namespace RpgApi.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
+            
         }
 
         public DbSet<Personagem> Personagens { get; set; }
