@@ -2,21 +2,26 @@ using Microsoft.AspNetCore.Mvc;
 using RpgApi.Data;
 using RpgApi.Models; 
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace RpgApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class PersonagensController : ControllerBase
     {
         //Programação de toda a classe ficará aqui abaixo
         private readonly DataContext _context; //Declaração do atributo
+        private readonly IConfiguration _configuration;
 
-        public PersonagensController(DataContext context)
+        public PersonagensController(DataContext context, IConfiguration configuration)
         {
             //Inicialização do atributo a partir de um parâmetro          
             _context = context;
+            _configuration = configuration;
         }
 
          [HttpGet("{id}")] //Buscar pelo id
@@ -190,9 +195,9 @@ namespace RpgApi.Controllers
         { 
             try            
             { 
+                int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value );
                 List<Personagem> lista = await _context.Personagens                            
-                    .Where(u => u.Usuario.Id == userId)                             
-                    .ToListAsync(); 
+                    .Where(u => u.Usuario.Id == userId).ToListAsync(); 
                 return Ok(lista);             
             } 
             catch (System.Exception ex)             	

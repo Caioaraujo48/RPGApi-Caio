@@ -21,12 +21,11 @@ namespace RpgApi.Models
         public DateTime? DataAcesso { get; set; } //using System;
 
         [NotMapped] // using System.ComponentModel.DataAnnotations.Schema
+        public string Token { get; set; }
+        [NotMapped]
         public string PasswordString { get; set; }
         public List<Personagem> Personagens { get; set; }//using System.Collections.Generic;
         public string Perfil { get; set; }
         public string Email { get; set; }
-
-
-
     }
 }

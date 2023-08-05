@@ -91,12 +91,5 @@ namespace RpgApi.Data
             //Define que se o Perfil não for informado, o valor padrão será jogador
             modelBuilder.Entity<Usuario>().Property(u => u.Perfil).HasDefaultValue("Jogador");
         }
-
-        
-
-
-
-
-
     }
 }
